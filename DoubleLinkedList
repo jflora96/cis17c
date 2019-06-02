@@ -1,0 +1,139 @@
+//DoubleLinkedList.h
+#pragma once
+#include <iostream>
+using namespace std;
+
+struct node
+{
+	int data;
+	node *next;
+	node *prev;
+};
+
+class DoubleLinkedList
+{
+private:
+	node *head;
+	node *tail;
+public:
+	DoubleLinkedList();
+	~DoubleLinkedList();
+	int size();
+	void addNode(int nodeToAdd);
+	void deleteNode(int nodeToDelete);
+	void print();
+};
+
+//DoubleLinkedList.cpp
+#include <iostream>
+#include "DoubleLinkedList.h"
+using namespace std;
+
+DoubleLinkedList::DoubleLinkedList()
+{
+	node *head = NULL;
+	node *tail = NULL;
+}
+
+DoubleLinkedList::~DoubleLinkedList()
+{
+
+}
+
+int DoubleLinkedList::size()
+{
+	if (head == NULL)
+	{
+		cout << "The list is empty" << endl;
+		return 0;
+	}
+
+	else
+	{
+		int size = 0;
+		node *temp = head;
+		while (temp != NULL)
+		{
+			temp = temp->next;
+			size++;
+		}
+		return size;
+	}
+}
+void DoubleLinkedList::addNode(int nodeToAdd)
+{
+	if (head == NULL)
+	{
+		node *temp = new node;
+		temp->data = nodeToAdd;
+		temp->next = NULL;
+		head = temp;
+		tail = temp;
+	}
+
+	else
+	{
+		node *temp = new node;
+		temp->data = nodeToAdd;
+		temp->next = NULL;
+		tail->next = temp;
+		tail = tail->next;
+	}
+}
+
+void DoubleLinkedList::deleteNode(int nodeToDelete)
+{
+	if (head == NULL)
+	{
+		cout << "nothing is in the list to delete" << endl;
+	}
+
+
+	else
+	{
+			node* lead = head;
+			node* follow = head;
+
+			while (lead->data != nodeToDelete)
+			{
+				follow = lead;
+				lead = lead->next;
+			}
+			follow->next = lead->next;
+			delete lead;
+	}
+}
+
+void DoubleLinkedList::print()
+{
+	node *temp = new node;
+	temp->next = NULL;
+	temp = head;
+	while (temp != NULL)
+	{
+		cout << temp->data << " ";
+		temp = temp->next;
+	}
+	cout << endl;
+}
+
+//Source.cpp
+#include <iostream>
+#include "DoubleLinkedList.h"
+using namespace std;
+
+int main()
+{
+	DoubleLinkedList mylist;
+	mylist.addNode(1);
+	mylist.addNode(2);
+	mylist.addNode(3);
+	mylist.print();
+	mylist.deleteNode(2);
+	mylist.print();
+	cout << mylist.size();
+
+
+	system("pause");
+	return 0;
+}
