@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+
+void printArray(int arr[], int size);
+void mergeSort(int* arr, int beginning, int size);
+void merge(int arr[], int beginning, int middle, int size);
+
+int main()
+{
+	int beginning = 0;
+	int arr[] = { 3, 5, 1, 2, 9, 8 ,4, 7, 6, 0, 10 };
+	int size = sizeof(arr) / sizeof(arr[0]);
+
+	printArray(arr, size);
+
+	mergeSort(arr, beginning, size - 1);
+
+	printArray(arr, size);
+
+	system("pause");
+	return 0;
+}
+
+void mergeSort(int *arr, int beginning, int size)
+{
+
+	if (1 < size)
+	{
+		int middle = (size + 0) / 2;
+
+		mergeSort(arr, 0, middle);
+		mergeSort(arr, middle + 1, size);
+
+		merge(arr, 0, middle, size);
+	}
+
+}
+
+void merge(int arr[], int beginning, int middle, int size)
+{
+	int tempArraySize = middle - beginning + 1;
+	int tempArraySize2 = size - middle;
+
+	int* tempArray1 = (int*)malloc(tempArraySize * sizeof(int));
+	int* tempArray2 = (int*)malloc(tempArraySize * sizeof(int));
+
+	for (int i = 0; i < tempArraySize; i++)
+	{
+		tempArray1[i] = arr[beginning + i];
+	}
+	for (int j = 0; j < tempArraySize2; j++)
+	{
+		tempArray2[j] = arr[middle + 1 + j];
+	}
+
+	int i = 0;
+	int j = 0;
+	int k = beginning;
+
+	while (i < tempArraySize && j < tempArraySize2)
+	{
+		if (tempArray1[i] <= tempArray2[j])
+		{
+			arr[k] = tempArray1[i];
+			i++;
+		}
+		else
+		{
+			arr[k] = tempArray2[j];
+			j++;
+		}
+		k++;
+	}
+
+	while (i < tempArraySize)
+	{
+		arr[k] = tempArray1[i];
+		i++;
+		k++;
+	}
+
+	while (j < tempArraySize2)
+	{
+		arr[k] = tempArray2[j];
+		j++;
+		k++;
+	}
+
+}
+
+void printArray(int arr[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << arr[i] << " ";
+	}
+
+	cout << endl;
+}
