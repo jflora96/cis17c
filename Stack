@@ -1,0 +1,135 @@
+//Stack.h
+#pragma once
+#include <iostream>
+using namespace std;
+
+struct node
+{
+	int data;
+	node *link;
+};
+
+class stack
+{
+private:
+	node * top;
+public:
+	stack();
+	~stack();
+	void push(int data);
+	void pop();
+	bool isEmpty();
+	int peek();
+	void display();
+};
+
+//Stack.cpp
+#include <iostream>
+#include "Stack.h"
+using namespace std;
+
+stack::stack()
+{
+	top = NULL;
+}
+
+stack::~stack()
+{
+
+}
+
+void stack::push(int data)
+{
+	node *temp = new node;
+	temp->link = NULL;
+	temp->data = data;
+	temp->link = top;
+	top = temp;
+}
+
+void stack::pop()
+{
+	node *temp = top;
+
+	if (top == NULL)
+	{
+		cout << "stack is empty" << endl;
+		return;
+	}
+	else
+	{
+		temp = top;
+		top = top->link;
+		temp->link = NULL;
+	}
+}
+
+bool stack::isEmpty()
+{
+	return top == NULL;
+}
+
+int stack::peek()
+{
+	if (top == NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		return top->link->data;
+	}
+}
+
+void stack::display()
+{
+	node *temp = top;
+
+	if (top == NULL)
+	{
+		cout << "nothing in the stack" << endl;
+	}
+
+	else
+	{
+		temp = top;
+		while (temp != NULL)
+		{
+			cout << temp->data << " ";
+			temp = temp->link;
+		}
+		cout << endl;
+	}
+}
+
+//source.cpp
+#include <iostream>
+#include "Stack.h"
+using namespace std;
+
+int main()
+{
+	stack mystack;
+	mystack.push(1);
+	mystack.push(2);
+	mystack.push(3);
+	mystack.display();
+	bool ans = mystack.isEmpty();
+	if (ans)
+	{
+		cout << "stack is empty" << endl;
+	}
+	else
+	{
+		cout << "stack is not empty" << endl;
+	}
+
+	int a = mystack.peek();
+	cout << a << endl;
+
+	mystack.pop();
+	mystack.pop();
+	mystack.display();
+	system("pause");
+	return 0;
+}
